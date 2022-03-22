@@ -8,10 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal abstract class Solver<TState> : IStateSolver
+internal abstract class Solver<TState> : ISolver
     where TState : IState {
-
-    public Type StateType => typeof(TState);
 
     public Variant<Solution, Failure> Solve(Given given) {
         ReactToGiven(given);
