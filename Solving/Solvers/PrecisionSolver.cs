@@ -1,4 +1,5 @@
 ﻿
+using IterativeSolver.Solving.Magnifiables;
 using IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
 
 using System;
@@ -16,7 +17,8 @@ internal abstract class PrecisionSolver<TState, TChecker> : Solver<TState>, IPre
 
     protected override bool MatchesStopConditions(TState state) { 
         Given given = state.Given;
-        IPrecisionChecker checker = state.Magnifiable.GetPrecisionChecker();
-        return checker.IsPrecise(given);
+        IMagnifiable magnifiable = state.Magnifiable;
+        IPrecisionChecker checker = PrecisionChecker;
+        return checker.IsPrecise(magnifiable, given);
     }
 }
