@@ -1,6 +1,6 @@
 ﻿
 using IterativeSolver.Solving.Magnifiables;
-using IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
+using IterativeSolver.Solving.PrecisionCheckers;
 
 using System;
 using System.Collections.Generic;

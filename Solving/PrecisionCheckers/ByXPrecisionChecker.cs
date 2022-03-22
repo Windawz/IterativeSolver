@@ -1,10 +1,12 @@
-﻿using System;
+﻿using IterativeSolver.Solving.Magnifiables;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
+namespace IterativeSolver.Solving.PrecisionCheckers;
 internal class ByXPrecisionChecker : PrecisionChecker {
     public override bool IsPrecise(IMagnifiable magnifiable, Given given) {
         double x = magnifiable.Absolute;

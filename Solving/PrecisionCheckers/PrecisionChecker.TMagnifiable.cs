@@ -1,10 +1,12 @@
-﻿using System;
+﻿using IterativeSolver.Solving.Magnifiables;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
+namespace IterativeSolver.Solving.PrecisionCheckers;
 internal abstract class PrecisionChecker<TMagnifiable> : IPrecisionChecker<TMagnifiable>
     where TMagnifiable : IMagnifiable {
 
