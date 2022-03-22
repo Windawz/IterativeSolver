@@ -1,5 +1,6 @@
 ﻿
 using IterativeSolver.Solving.Magnifiables;
+using IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal class SecantSolver : PrecisionSolver<State<MagnifiableSegmentYDifference>> {
+internal class SecantSolver : PrecisionSolver<State<MagnifiableSegmentYDifference>, BySegmentYDifferencePrecisionChecker> {
+    public override BySegmentYDifferencePrecisionChecker PrecisionChecker =>
+        new();
+
     protected override State<MagnifiableSegmentYDifference> GetInitialState(Given given) =>
         new State<MagnifiableSegmentYDifference>(given, new(given.Segment, given.Equation.Function));
     protected override void Step(State<MagnifiableSegmentYDifference> state) {

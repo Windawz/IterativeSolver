@@ -6,11 +6,5 @@ using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
 internal abstract class PrecisionChecker : IPrecisionChecker {
-    protected PrecisionChecker(IMagnifiable magnifiable) {
-        Magnifiable = magnifiable;
-    }
-
-    protected IMagnifiable Magnifiable { get; }
-
-    public abstract bool IsPrecise(Given given);
+    public abstract bool IsPrecise(IMagnifiable magnifiable, Given given);
 }

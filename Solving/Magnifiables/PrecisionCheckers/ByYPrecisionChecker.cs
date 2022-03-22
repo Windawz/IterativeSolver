@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
 internal class ByYPrecisionChecker : PrecisionChecker {
-    public ByYPrecisionChecker(IMagnifiable magnifiable) : base(magnifiable) { }
-
-    public override bool IsPrecise(Given given) {
-        double x = Magnifiable.Absolute;
+    public override bool IsPrecise(IMagnifiable magnifiable, Given given) {
+        double x = magnifiable.Absolute;
         double y = given.Equation.Function(x);
         return Math.Abs(y) <= given.Precision.Value;
     }

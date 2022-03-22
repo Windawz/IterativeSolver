@@ -1,5 +1,6 @@
 ﻿
 using IterativeSolver.Solving.Magnifiables;
+using IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
 
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,10 @@ using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
 
-internal class IterationsMethodSolver : PrecisionSolver<IterationsMethodSolverState> {
+internal class IterationsMethodSolver : PrecisionSolver<IterationsMethodSolverState, ByYPrecisionChecker> {
+    public override ByYPrecisionChecker PrecisionChecker =>
+        new();
+
     protected override IterationsMethodSolverState GetInitialState(Given given) =>
         new(given, new MagnifiablePoint(given.Segment.Right));
     protected override void Step(IterationsMethodSolverState state) {

@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
 internal class BySegmentYDifferencePrecisionChecker : PrecisionChecker<IMagnifiable<Segment>> {
-    public BySegmentYDifferencePrecisionChecker(IMagnifiable<Segment> magnifiable) : base(magnifiable) { }
-
-    public override bool IsPrecise(Given given) {
+    public override bool IsPrecise(IMagnifiable<Segment> magnifiable, Given given) {
         var f = given.Equation.Function;
-        var s = Magnifiable.Value;
+        var s = magnifiable.Value;
         return Math.Abs(f(s.Left) - f(s.Right)) <= (double)given.Precision.Value;
     }
 }

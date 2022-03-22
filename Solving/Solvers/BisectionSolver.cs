@@ -1,5 +1,6 @@
 ﻿
 using IterativeSolver.Solving.Magnifiables;
+using IterativeSolver.Solving.Magnifiables.PrecisionCheckers;
 
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal class BisectionSolver : PrecisionSolver<State<MagnifiableSegmentMiddle>> {
+internal class BisectionSolver : PrecisionSolver<State<MagnifiableSegmentMiddle>, ByYPrecisionChecker> {
+    public override ByYPrecisionChecker PrecisionChecker =>
+        new();
+
     protected override void ReactToGiven(Given given) {
         ThrowIfSameSignOnBothEnds(given);
         base.ReactToGiven(given);
