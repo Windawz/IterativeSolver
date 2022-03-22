@@ -10,4 +10,6 @@ namespace IterativeSolver.Solving.Solvers;
 internal interface IPrecisionSolver<TChecker> : IPrecisionSolver 
     where TChecker : IPrecisionChecker {
     new TChecker PrecisionChecker { get; }
+    IPrecisionChecker IPrecisionSolver.PrecisionChecker =>
+        PrecisionChecker;
 }
