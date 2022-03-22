@@ -29,14 +29,6 @@ internal class ReportFormatter : IFormatter<Report> {
             .AppendLine(FormatKeyValue("Equation", report.Goal.Given.Equation.Text))
             .AppendLine(FormatKeyValue("Solver", report.Goal.Solver.Name))
             .AppendLine(FormatKeyValue("Segment", report.Goal.Given.Segment));
-
-        if (report.Goal.Solver is IStateSolver stateSolver) {
-            Type magnifiableType = stateSolver.StateType.GetProperty(nameof(IState.Magnifiable))!.GetType();
-            Type precisionCheckerType = magnifiableType.GetRuntimeMethod(nameof(IMagnifiable.GetPrecisionChecker))!.ReturnType;
-            string precisionCheckerName = precisionCheckerType.Name;
-            builder.AppendLine(FormatKeyValue("Precision checker", precisionCheckerName));
-        }
-
         builder
             .AppendLine(FormatKeyValue("Maximum step amount", report.Goal.Given.MaxSteps));
 
