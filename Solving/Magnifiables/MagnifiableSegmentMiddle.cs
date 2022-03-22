@@ -12,6 +12,4 @@ internal class MagnifiableSegmentMiddle : Magnifiable<Segment> {
     public MagnifiableSegmentMiddle(Segment value) : base(value) { }
 
     public override double GetAbsolute(Segment value) => value.Middle;
-    public override IPrecisionChecker GetPrecisionChecker() =>
-        new ByYPrecisionChecker(this);
 }

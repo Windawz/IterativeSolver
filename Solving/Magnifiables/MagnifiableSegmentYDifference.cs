@@ -17,6 +17,4 @@ internal class MagnifiableSegmentYDifference : Magnifiable<Segment> {
 
     public override double GetAbsolute(Segment value) =>
         Math.Abs(_function(value.Left) - _function(value.Right));
-    public override IPrecisionChecker GetPrecisionChecker() =>
-        new BySegmentYDifferencePrecisionChecker(this);
 }

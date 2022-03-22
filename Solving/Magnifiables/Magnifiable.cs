@@ -27,5 +27,4 @@ internal abstract class Magnifiable<T> : IMagnifiable<T>
     public T? LastValue { get; private set; }
 
     public abstract double GetAbsolute(T value);
-    public abstract IPrecisionChecker GetPrecisionChecker();
 }

@@ -12,6 +12,4 @@ internal class MagnifiedSegmentRight : Magnifiable<Segment> {
     public MagnifiedSegmentRight(Segment value) : base(value) { }
 
     public override double GetAbsolute(Segment value) => throw new NotImplementedException();
-    public override IPrecisionChecker GetPrecisionChecker() =>
-        new ByYPrecisionChecker(this);
 }

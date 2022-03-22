@@ -12,6 +12,4 @@ internal class MagnifiablePoint : Magnifiable<double> {
     public MagnifiablePoint(double value) : base(value) { }
 
     public override double GetAbsolute(double value) => value;
-    public override IPrecisionChecker GetPrecisionChecker() => 
-        new ByYPrecisionChecker(this);
 }

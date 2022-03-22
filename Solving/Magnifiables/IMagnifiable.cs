@@ -15,5 +15,4 @@ internal interface IMagnifiable {
     double? LastAbsolute => LastValue is null ? null : GetAbsolute(LastValue);
 
     double GetAbsolute(object value);
-    IPrecisionChecker GetPrecisionChecker();
 }
