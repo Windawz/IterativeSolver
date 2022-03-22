@@ -9,9 +9,7 @@ namespace IterativeSolver.Solving.Magnifiables;
 internal interface IMagnifiable<T> : IMagnifiable
     where T : notnull {
     new T Value { get; set; }
-    new double Absolute => ((IMagnifiable)this).Absolute;
     new T? LastValue { get; }
-    new double? LastAbsolute => ((IMagnifiable)this).LastAbsolute;
     object IMagnifiable.Value {
         get => Value;
         set {
