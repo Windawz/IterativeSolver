@@ -13,7 +13,4 @@ internal interface IState {
     int Steps { get; set; }
     Failure? Failure { get; set; }
     IMagnifiable Magnifiable { get; }
-
-    Variant<Solution, Failure> ToSolutionOrFailure() => Failure is null ?
-         new(new Solution(Magnifiable.Absolute, Steps)) : new(Failure);
 }

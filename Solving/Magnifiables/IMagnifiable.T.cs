@@ -16,8 +16,9 @@ internal interface IMagnifiable<T> : IMagnifiable
             Type inputType = value.GetType();
             Type expectedType = typeof(T);
             if (inputType != expectedType) {
-                throw new ArgumentException(nameof(value),
-                    $"Type mismatch (input type: {inputType}, should be {expectedType})");
+                throw new ArgumentException(
+                    $"Type mismatch (input type: {inputType}, should be {expectedType})",
+                    nameof(value));
             }
             Value = (T)value;
         }
@@ -25,7 +26,4 @@ internal interface IMagnifiable<T> : IMagnifiable
     object? IMagnifiable.LastValue {
         get => LastValue;
     }
-
-    double GetAbsolute(T value);
-    double IMagnifiable.GetAbsolute(object value) => GetAbsolute((T)value);
 }

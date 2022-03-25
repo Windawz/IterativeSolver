@@ -1,4 +1,5 @@
 ﻿
+using IterativeSolver.Solving.Absolutes;
 using IterativeSolver.Solving.Magnifiables;
 using IterativeSolver.Solving.PrecisionCheckers;
 
@@ -10,13 +11,16 @@ using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
 
-internal class IterationsMethodSolver : PrecisionSolver<IterationsMethodSolverState, ByYPrecisionChecker> {
-    public override ByYPrecisionChecker PrecisionChecker =>
-        new();
+using TState = IterationsMethodSolverState;
 
-    protected override IterationsMethodSolverState GetInitialState(Given given) =>
-        new(given, new MagnifiablePoint(given.Segment.Right));
-    protected override void Step(IterationsMethodSolverState state) {
+internal class IterationsMethodSolver : PrecisionSolver<TState> {
+    public IterationsMethodSolver(IPrecisionChecker precisionChecker) : base(precisionChecker) { }
+
+    protected override IAbsolute? Absolute { get; set; } = new PointAbsolute();
+
+    protected override TState GetInitialState(Given given) =>
+        new(given, new Magnifiable<double>(given.Segment.Right));
+    protected override void Step(TState state) {
         TrySetPsiOrFail(state);
         if (state.Psi is null) {
             return;
@@ -24,7 +28,7 @@ internal class IterationsMethodSolver : PrecisionSolver<IterationsMethodSolverSt
 
         state.Magnifiable.Value = state.Psi(state.Magnifiable.Value);
     }
-    private static void TrySetPsiOrFail(IterationsMethodSolverState state) {
+    private static void TrySetPsiOrFail(TState state) {
         state.Psi = TryGetPsi(state.Magnifiable.Value, state.Given.Equation.Function, state.Given.Segment);
         if (state.Psi is null) {
             state.Failure = new("Failed to get a suitable psi function");

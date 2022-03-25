@@ -10,9 +10,5 @@ using System.Threading.Tasks;
 namespace IterativeSolver.Solving.Magnifiables;
 internal interface IMagnifiable {
     object Value { get; set; }
-    double Absolute => GetAbsolute(Value);
     object? LastValue { get; }
-    double? LastAbsolute => LastValue is null ? null : GetAbsolute(LastValue);
-
-    double GetAbsolute(object value);
 }

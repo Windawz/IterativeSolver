@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal abstract class Solver<TState> : ISolver
+internal abstract class StateSolver<TState> : ISolver
     where TState : IState {
 
     public Variant<Solution, Failure> Solve(Given given) {
@@ -20,7 +20,7 @@ internal abstract class Solver<TState> : ISolver
             IterateAndFailOnException(state);
         }
 
-        return state.ToSolutionOrFailure();
+        return ToSolutionOrFailure(state);
     }
 
     protected virtual void ReactToGiven(Given given) { }
@@ -29,7 +29,17 @@ internal abstract class Solver<TState> : ISolver
     protected abstract void Step(TState state);
     protected virtual void PostStep(TState state) { }
     protected abstract bool MatchesStopConditions(TState state);
+    protected abstract Solution GetSolution(TState state);
 
+    private static void SetFailureOnStepsExceeded(TState state) {
+        if (HasExceededMaxSteps(state)) {
+            state.Failure = new Failure("Exceeded max steps");
+        }
+    }
+    private static bool HasExceededMaxSteps(TState state) =>
+        state.Steps > state.Given.MaxSteps;
+    private static void IncrementSteps(TState state) =>
+        state.Steps++;
     private void IterateAndFailOnException(TState state) {
         try {
             Iterate(state);
@@ -47,13 +57,6 @@ internal abstract class Solver<TState> : ISolver
     private bool ShouldStop(TState state) =>
         state.Failure is not null 
         || MatchesStopConditions(state);
-    private void SetFailureOnStepsExceeded(TState state) {
-        if (HasExceededMaxSteps(state)) {
-            state.Failure = new Failure("Exceeded max steps");
-        }
-    }
-    private bool HasExceededMaxSteps(TState state) =>
-        state.Steps > state.Given.MaxSteps;
-    private void IncrementSteps(TState state) =>
-        state.Steps++;
+    private Variant<Solution, Failure> ToSolutionOrFailure(TState state) =>
+        state.Failure is null ? GetSolution(state) : state.Failure;
 }

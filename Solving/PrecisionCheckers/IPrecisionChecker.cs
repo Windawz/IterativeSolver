@@ -1,4 +1,5 @@
-﻿using IterativeSolver.Solving.Magnifiables;
+﻿using IterativeSolver.Solving.Absolutes;
+using IterativeSolver.Solving.Solvers;
 
 using System;
 using System.Collections.Generic;
@@ -8,5 +9,7 @@ using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.PrecisionCheckers;
 internal interface IPrecisionChecker {
-    bool IsPrecise(IMagnifiable magnifiable, Given given);
+    public Precision Precision { get; }
+
+    public bool IsPrecise(IState state, IAbsolute absolute);
 }

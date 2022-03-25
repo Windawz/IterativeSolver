@@ -12,4 +12,7 @@ internal class Precision {
     }
 
     public double Value { get; }
+
+    public static implicit operator Precision(double value) =>
+        new(value);
 }

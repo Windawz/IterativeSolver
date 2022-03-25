@@ -1,4 +1,5 @@
 ﻿
+using IterativeSolver.Solving.Absolutes;
 using IterativeSolver.Solving.Magnifiables;
 using IterativeSolver.Solving.PrecisionCheckers;
 
@@ -9,13 +10,17 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal class NewtonSolver : PrecisionSolver<State<MagnifiablePoint>, ByYPrecisionChecker> {
-    public override ByYPrecisionChecker PrecisionChecker =>
-        new();
 
-    protected override State<MagnifiablePoint> GetInitialState(Given given) =>
-        new(given, new MagnifiablePoint(given.Segment.Right));
-    protected override void Step(State<MagnifiablePoint> state) {
+using TState = State<Magnifiable<double>>;
+
+internal class NewtonSolver : PrecisionSolver<TState> {
+    public NewtonSolver(IPrecisionChecker precisionChecker) : base(precisionChecker) { }
+
+    protected override IAbsolute? Absolute { get; set; } = new PointAbsolute();
+
+    protected override TState GetInitialState(Given given) =>
+        new(given, new Magnifiable<double>(given.Segment.Right));
+    protected override void Step(TState state) {
         double x = state.Magnifiable.Value;
         var f = state.Given.Equation.Function;
         state.Magnifiable.Value = Magnify(f, x);

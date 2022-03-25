@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Magnifiables;
-internal abstract class Magnifiable<T> : IMagnifiable<T>
+internal class Magnifiable<T> : IMagnifiable<T>
     where T : notnull {
 
-    protected Magnifiable(T value) {
+    public Magnifiable(T value) {
         _value = value;
     }
 
@@ -25,6 +25,4 @@ internal abstract class Magnifiable<T> : IMagnifiable<T>
         }
     }
     public T? LastValue { get; private set; }
-
-    public abstract double GetAbsolute(T value);
 }

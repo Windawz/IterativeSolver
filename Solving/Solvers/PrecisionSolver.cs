@@ -1,4 +1,5 @@
 ﻿
+using IterativeSolver.Solving.Absolutes;
 using IterativeSolver.Solving.Magnifiables;
 using IterativeSolver.Solving.PrecisionCheckers;
 
@@ -9,16 +10,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal abstract class PrecisionSolver<TState, TChecker> : Solver<TState>, IPrecisionSolver<TChecker>
-    where TState : IState 
-    where TChecker : IPrecisionChecker {
+internal abstract class PrecisionSolver<TState> : StateSolver<TState>, IPrecisionSolver
+    where TState : IState {
 
-    public abstract TChecker PrecisionChecker { get; }
+    protected PrecisionSolver(IPrecisionChecker precisionChecker) {
+        PrecisionChecker = precisionChecker;
+    }
+
+    public IPrecisionChecker PrecisionChecker { get; }
+    protected abstract IAbsolute? Absolute { get; set; }
 
     protected override bool MatchesStopConditions(TState state) { 
-        Given given = state.Given;
-        IMagnifiable magnifiable = state.Magnifiable;
-        IPrecisionChecker checker = PrecisionChecker;
-        return checker.IsPrecise(magnifiable, given);
+        if (Absolute is null) {
+            throw new InvalidOperationException($"{nameof(Absolute)} has not been set");
+        }
+        return PrecisionChecker.IsPrecise(state, Absolute);
     }
+    protected override Solution GetSolution(TState state) => Absolute is not null ?
+        new Solution(Absolute.GetAbsolute(state.Magnifiable.Value), state.Steps)
+        : throw new InvalidOperationException($"{nameof(Absolute)} is null");
 }

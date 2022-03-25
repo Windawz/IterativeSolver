@@ -8,8 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal class IterationsMethodSolverState : State<MagnifiablePoint> {
-    public IterationsMethodSolverState(Given given, MagnifiablePoint initialValue) : base(given, initialValue) { }
+internal class IterationsMethodSolverState : State<Magnifiable<double>> {
+    public IterationsMethodSolverState(Given given, Magnifiable<double> initialValue) : base(given, initialValue) { }
 
     public Function? Psi { get; set; } = null;
 }

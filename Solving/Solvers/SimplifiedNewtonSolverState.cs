@@ -7,8 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal class SimplifiedNewtonSolverState : State<MagnifiablePoint> {
-    public SimplifiedNewtonSolverState(Given given, MagnifiablePoint initialValue) : base(given, initialValue) {
+internal class SimplifiedNewtonSolverState : State<Magnifiable<double>> {
+    public SimplifiedNewtonSolverState(Given given, Magnifiable<double> initialValue) : base(given, initialValue) {
         CachedDerivative = given.Equation.Function.GetDerivative()(Magnifiable.Value);
     }
 

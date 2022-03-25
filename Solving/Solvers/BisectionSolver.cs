@@ -1,4 +1,5 @@
 ﻿
+using IterativeSolver.Solving.Absolutes;
 using IterativeSolver.Solving.Magnifiables;
 using IterativeSolver.Solving.PrecisionCheckers;
 
@@ -9,17 +10,22 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace IterativeSolver.Solving.Solvers;
-internal class BisectionSolver : PrecisionSolver<State<MagnifiableSegmentMiddle>, ByYPrecisionChecker> {
-    public override ByYPrecisionChecker PrecisionChecker =>
-        new();
+
+using TState = State<Magnifiable<Segment>>;
+
+internal class BisectionSolver : PrecisionSolver<TState> {
+    public BisectionSolver(IPrecisionChecker precisionChecker) : base(precisionChecker) { }
 
     protected override void ReactToGiven(Given given) {
         ThrowIfSameSignOnBothEnds(given);
         base.ReactToGiven(given);
     }
-    protected override State<MagnifiableSegmentMiddle> GetInitialState(Given given) =>
-        new(given, new MagnifiableSegmentMiddle(given.Segment));
-    protected override void Step(State<MagnifiableSegmentMiddle> state) {
+
+    protected override IAbsolute? Absolute { get; set; } = new SegmentMiddleAbsolute();
+
+    protected override TState GetInitialState(Given given) =>
+        new(given, new Magnifiable<Segment>(given.Segment));
+    protected override void Step(TState state) {
         Segment s = state.Magnifiable.Value;
         var f = state.Given.Equation.Function;
         state.Magnifiable.Value = Magnify(f, s);
@@ -48,4 +54,6 @@ internal class BisectionSolver : PrecisionSolver<State<MagnifiableSegmentMiddle>
             return (x, x);
         }
     }
+
+    
 }
